@@ -24,8 +24,11 @@ public class ProductController {
     private ProductService productService;
 
     @PostMapping
-    public ResponseEntity<Product> addProduct(@RequestBody Product product){
-        return ResponseEntity.ok(productService.createProduct(product));
+    public ResponseEntity<Map<String,Object>> addProduct(@RequestBody @Valid Product product){
+        productService.createProduct(product);
+        Map<String,Object> map=new HashMap<>();
+        map.put("message","Product created successfully");
+        return new ResponseEntity<>(map,HttpStatus.CREATED);
     }
 
     @GetMapping
@@ -59,3 +62,4 @@ public class ProductController {
     }
 
 }
+
